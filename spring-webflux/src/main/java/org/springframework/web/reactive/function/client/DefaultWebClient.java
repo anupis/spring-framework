@@ -288,20 +288,8 @@ class DefaultWebClient implements WebClient {
 		}
 
 		@Override
-		public RequestHeadersSpec<?> body(Object body) {
+		public RequestHeadersSpec<?> bodyValue(Object body) {
 			this.inserter = BodyInserters.fromObject(body);
-			return this;
-		}
-
-		@Override
-		public RequestHeadersSpec<?> body(Object producer, Class<?> elementClass) {
-			this.inserter = BodyInserters.fromProducer(producer, elementClass);
-			return this;
-		}
-
-		@Override
-		public RequestHeadersSpec<?> body(Object producer, ParameterizedTypeReference<?> elementTypeRef) {
-			this.inserter = BodyInserters.fromProducer(producer, elementTypeRef);
 			return this;
 		}
 
@@ -319,6 +307,18 @@ class DefaultWebClient implements WebClient {
 		}
 
 		@Override
+		public RequestHeadersSpec<?> body(Object producer, Class<?> elementClass) {
+			this.inserter = BodyInserters.fromProducer(producer, elementClass);
+			return this;
+		}
+
+		@Override
+		public RequestHeadersSpec<?> body(Object producer, ParameterizedTypeReference<?> elementTypeRef) {
+			this.inserter = BodyInserters.fromProducer(producer, elementTypeRef);
+			return this;
+		}
+
+		@Override
 		public RequestHeadersSpec<?> body(BodyInserter<?, ? super ClientHttpRequest> inserter) {
 			this.inserter = inserter;
 			return this;
@@ -327,7 +327,7 @@ class DefaultWebClient implements WebClient {
 		@Override
 		@Deprecated
 		public RequestHeadersSpec<?> syncBody(Object body) {
-			return body(body);
+			return bodyValue(body);
 		}
 
 		@Override

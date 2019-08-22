@@ -25,8 +25,8 @@ import javax.xml.transform.Result;
 import javax.xml.transform.dom.DOMResult;
 import javax.xml.transform.stream.StreamResult;
 
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.xml.sax.InputSource;
@@ -41,7 +41,7 @@ import static org.assertj.core.api.Assertions.assertThat;
  * @author Arjen Poutsma
  * @author Sam Brannen
  */
-public abstract class AbstractStaxHandlerTestCase {
+abstract class AbstractStaxHandlerTestCase {
 
 	private static final String COMPLEX_XML =
 			"<?xml version='1.0' encoding='UTF-8'?>" +
@@ -61,16 +61,16 @@ public abstract class AbstractStaxHandlerTestCase {
 	private XMLReader xmlReader;
 
 
-	@Before
+	@BeforeEach
 	@SuppressWarnings("deprecation")  // on JDK 9
-	public void createXMLReader() throws Exception {
+	void createXMLReader() throws Exception {
 		xmlReader = org.xml.sax.helpers.XMLReaderFactory.createXMLReader();
 		xmlReader.setEntityResolver((publicId, systemId) -> new InputSource(new StringReader("")));
 	}
 
 
 	@Test
-	public void noNamespacePrefixes() throws Exception {
+	void noNamespacePrefixes() throws Exception {
 		StringWriter stringWriter = new StringWriter();
 		AbstractStaxHandler handler = createStaxHandler(new StreamResult(stringWriter));
 		xmlReader.setContentHandler(handler);
@@ -85,7 +85,7 @@ public abstract class AbstractStaxHandlerTestCase {
 	}
 
 	@Test
-	public void namespacePrefixes() throws Exception {
+	void namespacePrefixes() throws Exception {
 		StringWriter stringWriter = new StringWriter();
 		AbstractStaxHandler handler = createStaxHandler(new StreamResult(stringWriter));
 		xmlReader.setContentHandler(handler);
@@ -100,7 +100,7 @@ public abstract class AbstractStaxHandlerTestCase {
 	}
 
 	@Test
-	public void noNamespacePrefixesDom() throws Exception {
+	void noNamespacePrefixesDom() throws Exception {
 		DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
 		documentBuilderFactory.setNamespaceAware(true);
 		DocumentBuilder documentBuilder = documentBuilderFactory.newDocumentBuilder();
@@ -121,7 +121,7 @@ public abstract class AbstractStaxHandlerTestCase {
 	}
 
 	@Test
-	public void namespacePrefixesDom() throws Exception {
+	void namespacePrefixesDom() throws Exception {
 		DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
 		documentBuilderFactory.setNamespaceAware(true);
 		DocumentBuilder documentBuilder = documentBuilderFactory.newDocumentBuilder();

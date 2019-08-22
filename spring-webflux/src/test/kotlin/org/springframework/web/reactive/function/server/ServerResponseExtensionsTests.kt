@@ -23,8 +23,8 @@ import io.reactivex.Flowable
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.runBlocking
-import org.junit.Assert.assertEquals
-import org.junit.Test
+import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.Test
 import org.reactivestreams.Publisher
 import org.springframework.core.ParameterizedTypeReference
 import org.springframework.http.MediaType.*
@@ -67,12 +67,12 @@ class ServerResponseExtensionsTests {
 	fun `BodyBuilder#bodyAndAwait with object parameter`() {
 		val response = mockk<ServerResponse>()
 		val body = "foo"
-		every { bodyBuilder.body(ofType<String>()) } returns Mono.just(response)
+		every { bodyBuilder.bodyValue(ofType<String>()) } returns Mono.just(response)
 		runBlocking {
 			bodyBuilder.bodyAndAwait(body)
 		}
 		verify {
-			bodyBuilder.body(ofType<String>())
+			bodyBuilder.bodyValue(ofType<String>())
 		}
 	}
 

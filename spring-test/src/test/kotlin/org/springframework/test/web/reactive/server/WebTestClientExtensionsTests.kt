@@ -20,8 +20,8 @@ import io.mockk.mockk
 import io.mockk.verify
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
-import org.junit.Assert.assertEquals
-import org.junit.Test
+import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.Test
 import org.reactivestreams.Publisher
 import org.springframework.core.ParameterizedTypeReference
 import org.springframework.web.reactive.function.server.router
@@ -70,7 +70,7 @@ class WebTestClientExtensionsTests {
 	@Test
 	fun `KotlinBodySpec#isEqualTo`() {
 		WebTestClient
-				.bindToRouterFunction( router { GET("/") { ok().body("foo") } } )
+				.bindToRouterFunction( router { GET("/") { ok().bodyValue("foo") } } )
 				.build()
 				.get().uri("/").exchange().expectBody<String>().isEqualTo("foo")
 	}
@@ -78,7 +78,7 @@ class WebTestClientExtensionsTests {
 	@Test
 	fun `KotlinBodySpec#consumeWith`() {
 		WebTestClient
-				.bindToRouterFunction( router { GET("/") { ok().body("foo") } } )
+				.bindToRouterFunction( router { GET("/") { ok().bodyValue("foo") } } )
 				.build()
 				.get().uri("/").exchange().expectBody<String>().consumeWith { assertEquals("foo", it.responseBody) }
 	}
@@ -86,7 +86,7 @@ class WebTestClientExtensionsTests {
 	@Test
 	fun `KotlinBodySpec#returnResult`() {
 		WebTestClient
-				.bindToRouterFunction( router { GET("/") { ok().body("foo") } } )
+				.bindToRouterFunction( router { GET("/") { ok().bodyValue("foo") } } )
 				.build()
 				.get().uri("/").exchange().expectBody<String>().returnResult().apply { assertEquals("foo", responseBody) }
 	}
